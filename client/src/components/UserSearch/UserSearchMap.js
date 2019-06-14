@@ -3,7 +3,7 @@ import React from "react";
 class UserSearchMap extends React.Component {
   render() {
     return (
-      <div className="mt-1">
+      <div className="mt-1 sticky-top zIndex-minusOne">
         <iframe
           src="maps/search.html"
           title="hello"

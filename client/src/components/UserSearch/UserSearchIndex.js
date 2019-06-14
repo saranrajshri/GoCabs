@@ -9,14 +9,28 @@ import UserSearchResults from "./UserSearchResults";
 import UserSearchMap from "./UserSearchMap";
 
 class UserSearchIndex extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      destinationData: ""
+    };
+  }
+
+  //Recieving data from navbar and setting it to a state
+  updateDestinationData = data => {
+    this.setState({
+      destinationData: data
+    });
+  };
+
   render() {
     return (
       <div>
-        <NavBarHeader />
+        <NavBarHeader updateDestinationData={this.updateDestinationData} />
         <Container fluid={true}>
           <Row>
             <Col md={4} className="p-3">
-              <UserSearchResults />
+              <UserSearchResults destinationData={this.state.destinationData} />
             </Col>
             <Col md={8}>
               <UserSearchMap />

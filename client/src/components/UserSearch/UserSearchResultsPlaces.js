@@ -30,6 +30,7 @@ class UserSearchResultsPlaces extends React.Component {
           onClick={this.toggleCollapse}
           aria-controls={this.props.cat.id}
           aria-expanded={this.state.collapse}
+          className="cursor-pointer"
         >
           <Col>
             <h6 className="text-dark font-weight-bold">Dubakoor Hotel Thada</h6>
@@ -37,7 +38,7 @@ class UserSearchResultsPlaces extends React.Component {
           <Col>
             <FontAwesomeIcon
               icon={faChevronDown}
-              className="float-right mr-2 cursor-pointer"
+              className="float-right mr-2"
             />
           </Col>
         </Row>

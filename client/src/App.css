@@ -2,3 +2,25 @@
 .cursor-pointer{
     cursor: pointer;
 }
+.sticky-top {
+    top:0.5em !important
+}
+.zIndex-plusOne{
+    z-index: 1 !important
+}
+.zIndex-minusOne{
+    z-index: -1 !important
+}
+
+/* used for suggestion box of navbar */
+.w-94{
+    width:94% !important
+}
+/* Suggestions image size */
+.w-30px{
+    width:30px !important
+}
+.suggestion-item:hover{
+    background-color:#efefef;
+    cursor:pointer
+}

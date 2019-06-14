@@ -1,13 +1,85 @@
 import React from "react";
 
+//Axios
+import axios from "axios";
+
 //FontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTaxi, faSearchLocation } from "@fortawesome/free-solid-svg-icons";
 
 //Bootstrap Components
-import { Navbar, InputGroup, Form, Button, Col, Nav } from "react-bootstrap";
+import {
+  Navbar,
+  InputGroup,
+  Form,
+  Button,
+  Col,
+  Nav,
+  ListGroup,
+  Image,
+  Row
+} from "react-bootstrap";
 
 class NavBarHeader extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      suggestionsIsOpen: false,
+      suggestions: null,
+      queryString: "",
+      searchBoxValue: ""
+    };
+  }
+
+  // Get suggestions from api
+  toggleSuggestions = () => {
+    // Setting the queryString state to pass it in the url
+    this.setState({
+      searchBoxValue: document.getElementById("queryString").value,
+      suggestionsIsOpen: !this.state.suggestionsIsOpen,
+      queryString: this.state.searchBoxValue
+    });
+
+    //get data
+    axios
+      .get(
+        "https://places.demo.api.here.com/places/v1/discover/search?at=37.7942%2C-122.4070&q=" +
+          this.state.queryString +
+          "&app_id=vjy6uZJ1g8cBFrsFC8qX&app_code=JDE3TVLeWDjefVi30qzdaw"
+      )
+      .then(res => {
+        if (res.data) {
+          this.setState({
+            suggestions: res.data["results"]["items"]
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    // console.log(this.state.searchBoxValue);
+  };
+
+  // when the list item is clicked
+  updateDestination = index => {
+    var destination = this.state.suggestions[index];
+    // console.log(destination);
+
+    // update the destinationArray state for showing route
+    var destinationData = {
+      title: destination.title,
+      position: destination.position
+    };
+    this.setState({
+      searchBoxValue: destination.title,
+      suggestionsIsOpen: false
+    });
+
+    //send data from child to parent(UserSearchIndex.js)
+    this.props.updateDestinationData(destinationData);
+    // console.log(this.state.suggestionsIsOpen);
+  };
+
   render() {
     return (
       <div>
@@ -18,10 +90,17 @@ class NavBarHeader extends React.Component {
             <span className="text-warning">Cabs</span>
           </Navbar.Brand>
 
-          {/* Search Bar */}
           <Col md={5}>
+            {/* Search Bar */}
             <InputGroup>
-              <Form.Control type="search" placeholder="Location" />
+              <Form.Control
+                type="search"
+                placeholder="Location"
+                id="queryString"
+                autoComplete="off"
+                value={this.state.searchBoxValue}
+                onChange={this.toggleSuggestions}
+              />
               <InputGroup.Append>
                 <Button variant="warning">
                   <FontAwesomeIcon
@@ -31,6 +110,44 @@ class NavBarHeader extends React.Component {
                 </Button>
               </InputGroup.Append>
             </InputGroup>
+            {this.state.suggestionsIsOpen}
+            {this.state.suggestions && this.state.suggestionsIsOpen ? (
+              <div className="position-absolute zIndex-plusOne mt-1 w-94">
+                <ListGroup>
+                  {this.state.suggestions.map((suggestionArray, index) => {
+                    var streetName = suggestionArray.vicinity.replace(
+                      /(<([^>]+)>)/gi,
+                      ","
+                    );
+                    return (
+                      <ListGroup.Item
+                        key={index}
+                        className="suggestion-item"
+                        onClick={() => {
+                          this.updateDestination(index);
+                        }}
+                      >
+                        <Row>
+                          <Col md={1}>
+                            <Image
+                              src={suggestionArray.icon}
+                              className="w-30px"
+                            />
+                          </Col>
+                          <Col md={11}>
+                            {suggestionArray.title}
+
+                            <p className="text-secondary small font-weight-bold">
+                              {streetName}
+                            </p>
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                    );
+                  })}
+                </ListGroup>
+              </div>
+            ) : null}
           </Col>
 
           <Nav className="mr-auto ml-5">
