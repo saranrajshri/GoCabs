@@ -11,7 +11,7 @@ const data = {
   idk: {
     id: 1,
     createdAt: new Date(),
-    title: "thing 1"
+    title: "Details of this place"
   },
   another: {
     id: 2,
