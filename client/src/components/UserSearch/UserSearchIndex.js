@@ -1,5 +1,8 @@
 import React from "react";
 
+//Importing Context
+import UserSearchContext from "./UserSearchContext";
+
 //Bootstrap Components
 import { Row, Col, Container } from "react-bootstrap";
 
@@ -25,20 +28,23 @@ class UserSearchIndex extends React.Component {
 
   render() {
     return (
-      <div>
-        <NavBarHeader updateDestinationData={this.updateDestinationData} />
-        <Container fluid={true}>
-          <Row>
-            <Col md={4} className="p-3">
-              <UserSearchResults destinationData={this.state.destinationData} />
-            </Col>
-            <Col md={8}>
-              <UserSearchMap />
-            </Col>
-          </Row>
-        </Container>
-      </div>
+      <UserSearchContext.Provider value={this.state}>
+        <div>
+          <NavBarHeader updateDestinationData={this.updateDestinationData} />
+          <Container fluid={true}>
+            <Row>
+              <Col md={4} className="p-3">
+                <UserSearchResults />
+              </Col>
+              <Col md={8}>
+                <UserSearchMap />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      </UserSearchContext.Provider>
     );
   }
 }
+UserSearchIndex.contextType = UserSearchContext;
 export default UserSearchIndex;

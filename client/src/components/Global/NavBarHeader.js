@@ -68,7 +68,9 @@ class NavBarHeader extends React.Component {
     // update the destinationArray state for showing route
     var destinationData = {
       title: destination.title,
-      position: destination.position
+      destinationLat: destination.position[0],
+      destinationLon: destination.position[1],
+      icon: destination.icon
     };
     this.setState({
       searchBoxValue: destination.title,
@@ -112,40 +114,42 @@ class NavBarHeader extends React.Component {
             </InputGroup>
             {this.state.suggestionsIsOpen}
             {this.state.suggestions && this.state.suggestionsIsOpen ? (
-              <div className="position-absolute zIndex-plusOne mt-1 w-94">
-                <ListGroup>
-                  {this.state.suggestions.map((suggestionArray, index) => {
-                    var streetName = suggestionArray.vicinity.replace(
-                      /(<([^>]+)>)/gi,
-                      ","
-                    );
-                    return (
-                      <ListGroup.Item
-                        key={index}
-                        className="suggestion-item"
-                        onClick={() => {
-                          this.updateDestination(index);
-                        }}
-                      >
-                        <Row>
-                          <Col md={1}>
-                            <Image
-                              src={suggestionArray.icon}
-                              className="w-30px"
-                            />
-                          </Col>
-                          <Col md={11}>
-                            {suggestionArray.title}
+              <div className="positon-relative">
+                <div className="position-absolute zIndex-plusOne mt-1 w-94">
+                  <ListGroup>
+                    {this.state.suggestions.map((suggestionArray, index) => {
+                      var streetName = suggestionArray.vicinity.replace(
+                        /(<([^>]+)>)/gi,
+                        ","
+                      );
+                      return (
+                        <ListGroup.Item
+                          key={index}
+                          className="suggestion-item"
+                          onClick={() => {
+                            this.updateDestination(index);
+                          }}
+                        >
+                          <Row>
+                            <Col md={1}>
+                              <Image
+                                src={suggestionArray.icon}
+                                className="w-30px"
+                              />
+                            </Col>
+                            <Col md={11}>
+                              {suggestionArray.title}
 
-                            <p className="text-secondary small font-weight-bold">
-                              {streetName}
-                            </p>
-                          </Col>
-                        </Row>
-                      </ListGroup.Item>
-                    );
-                  })}
-                </ListGroup>
+                              <p className="text-secondary small font-weight-bold">
+                                {streetName}
+                              </p>
+                            </Col>
+                          </Row>
+                        </ListGroup.Item>
+                      );
+                    })}
+                  </ListGroup>
+                </div>
               </div>
             ) : null}
           </Col>

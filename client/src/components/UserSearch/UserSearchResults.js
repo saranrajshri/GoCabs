@@ -1,5 +1,8 @@
 import React from "react";
 
+//Importing Context
+import UserSearchContext from "./UserSearchContext";
+
 //Bootstrap Components
 import { Form } from "react-bootstrap";
 
@@ -30,7 +33,7 @@ class UserSearchResults extends React.Component {
     return (
       <div>
         <p className="text-secodary font-weight-bold text-secondary small">
-          Book a cab to Thada
+          Book a cab to {this.context.destinationData.title}
         </p>
         {/* Showing Booking Form */}
         <div className="border border-muted p-2 mb-3">
@@ -47,13 +50,17 @@ class UserSearchResults extends React.Component {
               <Form.Control
                 type="search"
                 placeholder="Type a place or pick from map"
+                defaultValue={this.context.destinationData.title}
               />
             </Form.Group>
           </Form>
         </div>
         {/* Showing results */}
         <p className="text-secondary small">
-          Showing results for <span className="font-weight-bold">Thada</span>
+          Showing results for{" "}
+          <span className="font-weight-bold">
+            {this.context.destinationData.title}
+          </span>
         </p>
         <div className="border border-muted p-2 mt-1">
           {/* Each result */}
@@ -66,4 +73,5 @@ class UserSearchResults extends React.Component {
     );
   }
 }
+UserSearchResults.contextType = UserSearchContext;
 export default UserSearchResults;
