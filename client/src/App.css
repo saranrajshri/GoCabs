@@ -20,8 +20,11 @@
 .w-30px{
     width:30px !important
 }
+/* From Suggestions */
+.w-85{
+    width:88.5% !important
+}
 .suggestion-item:hover{
     background-color:#efefef;
     cursor:pointer
 }
-/* Map Iframe */

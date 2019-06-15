@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMapMarkerAlt,
   faTaxi,
-  faChevronDown
+  faChevronDown,
+  faChevronUp
 } from "@fortawesome/free-solid-svg-icons";
 
 //Bootstrap Components
@@ -36,10 +37,17 @@ class UserSearchResultsPlaces extends React.Component {
             <h6 className="text-dark font-weight-bold">Dubakoor Hotel Thada</h6>
           </Col>
           <Col>
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              className="float-right mr-2"
-            />
+            {this.state.collapse ? (
+              <FontAwesomeIcon
+                icon={faChevronUp}
+                className="float-right mr-2"
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faChevronDown}
+                className="float-right mr-2"
+              />
+            )}
           </Col>
         </Row>
 

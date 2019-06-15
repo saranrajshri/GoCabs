@@ -25,39 +25,32 @@ class NavBarHeader extends React.Component {
     super();
     this.state = {
       suggestionsIsOpen: false,
-      suggestions: null,
+      suggestions: [],
       queryString: "",
       searchBoxValue: ""
     };
+
+    // refs
+    this.searchBar = React.createRef();
   }
 
-  // Get suggestions from api
-  toggleSuggestions = () => {
-    // Setting the queryString state to pass it in the url
-    this.setState({
-      searchBoxValue: document.getElementById("queryString").value,
-      suggestionsIsOpen: !this.state.suggestionsIsOpen,
-      queryString: this.state.searchBoxValue
-    });
+  search = async val => {
+    this.setState({ suggestionsIsOpen: true });
+    const res = await axios.get(
+      "https://places.demo.api.here.com/places/v1/discover/search?at=20.5937%2C78.9629&q=" +
+        this.state.queryString +
+        "&app_id=vjy6uZJ1g8cBFrsFC8qX&app_code=JDE3TVLeWDjefVi30qzdaw"
+    );
+    if (res.data) {
+      const result = await res.data["results"]["items"];
+      this.setState({ suggestions: result });
+    }
+    // console.log(this.state.suggestions);
+  };
 
-    //get data
-    axios
-      .get(
-        "https://places.demo.api.here.com/places/v1/discover/search?at=37.7942%2C-122.4070&q=" +
-          this.state.queryString +
-          "&app_id=vjy6uZJ1g8cBFrsFC8qX&app_code=JDE3TVLeWDjefVi30qzdaw"
-      )
-      .then(res => {
-        if (res.data) {
-          this.setState({
-            suggestions: res.data["results"]["items"]
-          });
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    // console.log(this.state.searchBoxValue);
+  onChangeHandler = async e => {
+    this.search(e.target.value);
+    this.setState({ queryString: e.target.value });
   };
 
   // when the list item is clicked
@@ -65,15 +58,17 @@ class NavBarHeader extends React.Component {
     var destination = this.state.suggestions[index];
     // console.log(destination);
 
+    // set the value fromm the item to the search bar
+    this.searchBar.current.value = destination.title;
+
     // update the destinationArray state for showing route
     var destinationData = {
       title: destination.title,
       destinationLat: destination.position[0],
       destinationLon: destination.position[1],
-      icon: destination.icon
+      destinationIcon: destination.icon
     };
     this.setState({
-      searchBoxValue: destination.title,
       suggestionsIsOpen: false
     });
 
@@ -98,10 +93,11 @@ class NavBarHeader extends React.Component {
               <Form.Control
                 type="search"
                 placeholder="Location"
-                id="queryString"
                 autoComplete="off"
-                value={this.state.searchBoxValue}
-                onChange={this.toggleSuggestions}
+                onChange={e => {
+                  this.onChangeHandler(e);
+                }}
+                ref={this.searchBar}
               />
               <InputGroup.Append>
                 <Button variant="warning">
@@ -113,41 +109,45 @@ class NavBarHeader extends React.Component {
               </InputGroup.Append>
             </InputGroup>
             {this.state.suggestionsIsOpen}
-            {this.state.suggestions && this.state.suggestionsIsOpen ? (
+            {this.state.suggestions &&
+            this.state.suggestionsIsOpen &&
+            this.searchBar.current.value.length > 1 ? (
               <div className="positon-relative">
                 <div className="position-absolute zIndex-plusOne mt-1 w-94">
                   <ListGroup>
-                    {this.state.suggestions.map((suggestionArray, index) => {
-                      var streetName = suggestionArray.vicinity.replace(
-                        /(<([^>]+)>)/gi,
-                        ","
-                      );
-                      return (
-                        <ListGroup.Item
-                          key={index}
-                          className="suggestion-item"
-                          onClick={() => {
-                            this.updateDestination(index);
-                          }}
-                        >
-                          <Row>
-                            <Col md={1}>
-                              <Image
-                                src={suggestionArray.icon}
-                                className="w-30px"
-                              />
-                            </Col>
-                            <Col md={11}>
-                              {suggestionArray.title}
+                    {this.state.suggestions
+                      .slice(0, 5)
+                      .map((suggestionArray, index) => {
+                        var streetName = suggestionArray.vicinity.replace(
+                          /(<([^>]+)>)/gi,
+                          ","
+                        );
+                        return (
+                          <ListGroup.Item
+                            key={index}
+                            className="suggestion-item"
+                            onClick={() => {
+                              this.updateDestination(index);
+                            }}
+                          >
+                            <Row>
+                              <Col md={1}>
+                                <Image
+                                  src={suggestionArray.icon}
+                                  className="w-30px"
+                                />
+                              </Col>
+                              <Col md={11}>
+                                {suggestionArray.title}
 
-                              <p className="text-secondary small font-weight-bold">
-                                {streetName}
-                              </p>
-                            </Col>
-                          </Row>
-                        </ListGroup.Item>
-                      );
-                    })}
+                                <p className="text-secondary small font-weight-bold">
+                                  {streetName}
+                                </p>
+                              </Col>
+                            </Row>
+                          </ListGroup.Item>
+                        );
+                      })}
                   </ListGroup>
                 </div>
               </div>

@@ -8,14 +8,16 @@ import { Row, Col, Container } from "react-bootstrap";
 
 //Components
 import NavBarHeader from "../Global/NavBarHeader";
-import UserSearchResults from "./UserSearchResults";
 import UserSearchMap from "./UserSearchMap";
+import UserSearchBookCabs from "./UserSearchBookCabs";
 
 class UserSearchIndex extends React.Component {
   constructor() {
     super();
     this.state = {
-      destinationData: ""
+      destinationData: "",
+      originData: "",
+      routeSummary: []
     };
   }
 
@@ -26,7 +28,22 @@ class UserSearchIndex extends React.Component {
     });
   };
 
+  //recieving data from the left section
+  updateOriginData = data => {
+    this.setState({
+      originData: data
+    });
+  };
+
+  //Recieving Route summary from UserSearchMaps
+  updateRouteSummary = data => {
+    this.setState({
+      routeSummary: data
+    });
+  };
+
   render() {
+    // console.log(this.state.routeSummary[0]);
     return (
       <UserSearchContext.Provider value={this.state}>
         <div>
@@ -34,10 +51,13 @@ class UserSearchIndex extends React.Component {
           <Container fluid={true}>
             <Row>
               <Col md={4} className="p-3">
-                <UserSearchResults />
+                <UserSearchBookCabs
+                  updateOriginData={this.updateOriginData}
+                  updateDestinationData={this.updateDestinationData}
+                />
               </Col>
               <Col md={8}>
-                <UserSearchMap />
+                <UserSearchMap updateRouteSummary={this.updateRouteSummary} />
               </Col>
             </Row>
           </Container>
