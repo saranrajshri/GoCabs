@@ -21,7 +21,7 @@ import {
 } from "react-bootstrap";
 
 var destinationData;
-class NavBarHeader extends React.Component {
+class UserNavBarHeader extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -183,4 +183,4 @@ class NavBarHeader extends React.Component {
     );
   }
 }
-export default NavBarHeader;
+export default UserNavBarHeader;

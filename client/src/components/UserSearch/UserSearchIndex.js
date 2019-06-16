@@ -7,7 +7,7 @@ import UserSearchContext from "./UserSearchContext";
 import { Row, Col, Container } from "react-bootstrap";
 
 //Components
-import NavBarHeader from "../Global/NavBarHeader";
+import UserNavBarHeader from "../Global/UserNavBarHeader";
 import UserSearchMap from "./UserSearchMap";
 import UserSearchBookCabs from "./UserSearchBookCabs";
 import UserSearchPlacesResults from "./UserSearchPlacesResults";
@@ -62,7 +62,7 @@ class UserSearchIndex extends React.Component {
         }}
       >
         <div>
-          <NavBarHeader
+          <UserNavBarHeader
             updateDestinationData={this.updateDestinationData}
             updatePlacesSuggestions={this.updatePlacesSuggestions}
           />
