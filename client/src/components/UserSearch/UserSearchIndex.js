@@ -17,7 +17,8 @@ class UserSearchIndex extends React.Component {
     this.state = {
       destinationData: "",
       originData: "",
-      routeSummary: []
+      routeSummary: [],
+      showDirectionsIsOpen: false
     };
   }
 
@@ -38,12 +39,14 @@ class UserSearchIndex extends React.Component {
   //Recieving Route summary from UserSearchMaps
   updateRouteSummary = data => {
     this.setState({
-      routeSummary: data
+      routeSummary: data,
+      showDirectionsIsOpen: true
     });
   };
 
   render() {
-    // console.log(this.state.routeSummary[0]);
+    console.log("origin->", this.state.originData);
+    console.log("destin-<>=", this.state.destinationData);
     return (
       <UserSearchContext.Provider value={this.state}>
         <div>

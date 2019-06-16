@@ -201,17 +201,11 @@
   	</style>
   </head>
   <body>
-  	<div class="row" style="margin-top:10px">
-  		<div class="col s12 m7">
-  			<div
-  			id="map"
-  			style="width:100%;height:500px; background:grey;margin-right:20px;"
-  			></div>
-  		</div>
-  		<div class="col s12 m5" style="margin-left:-30px">
-  			<div id="panel" style="width:100%;background:inherit"></div>
-  		</div>
-  	</div>
+  	  		
+	<div
+	id="map"
+	style="width:100%;height:600px; background:grey;margin-right:20px;"
+	></div>
 
   	<script type="text/javascript" charset="UTF-8">
   		var destinationLat = getQueryVariable("destinationLat");
@@ -262,7 +256,7 @@
 
          addWaypointsToPanel(route.waypoint);
          addManueversToPanel(route);
-         addSummaryToPanel(route.summary);
+         /* addSummaryToPanel(route.summary); */
         // ... etc.
     }
 
@@ -376,7 +370,7 @@
 
         // Add a marker for each maneuver
         for (i = 0; i < route.leg.length; i += 1) {
-        	for (j = 0; j < route.leg[i].maneuver.length; j += 1) {
+        	for (j = 1; j < route.leg[i].maneuver.length; j += 1) {
             // Get the next maneuver.
             maneuver = route.leg[i].maneuver[j];
             // Add a marker to the maneuvers group
@@ -420,8 +414,8 @@
 
        	/* nodeH3.textContent = waypointLabels.join(""); */
 
-       	routeInstructionsContainer.innerHTML = "";
-       	routeInstructionsContainer.appendChild(nodeH3);
+       	/* routeInstructionsContainer.innerHTML = ""; */
+       	/* routeInstructionsContainer.appendChild(nodeH3); */
        }
 
       /**
@@ -480,7 +474,7 @@
         }
     }
 
-    routeInstructionsContainer.appendChild(nodeOL);
+    /* routeInstructionsContainer.appendChild(nodeOL); */
 }
 
 Number.prototype.toMMSS = function() {
@@ -488,7 +482,17 @@ Number.prototype.toMMSS = function() {
 };
 
       // Now use the map as required...
-      calculateRouteFromAtoB(platform);
+	  calculateRouteFromAtoB(platform);
+	  
+
+	//Show marker on map
+	var originIcon = new H.map.Icon(originIcon);
+	var destinationIcon =new  H.map.Icon(destinationIcon)
+
+    var originMarker = new H.map.Marker({ lat: originLat, lng: originLon }, { icon: originIcon });
+    var destinationMarker = new H.map.Marker({ lat: destinationLat, lng: destinationLon }, { icon: destinationIcon });	
+	map.addObject(originMarker)
+	map.addObject(destinationMarker)
   </script>
 </body>
 </html>

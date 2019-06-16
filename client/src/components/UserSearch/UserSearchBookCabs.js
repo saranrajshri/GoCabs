@@ -13,6 +13,10 @@ import { Form, ListGroup, Row, Col, Image } from "react-bootstrap";
 import UserSearchResults from "./UserSearchResults";
 import UserSearchInstructions from "./UserSearchInstructions";
 
+//FontAwesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapPin } from "@fortawesome/free-solid-svg-icons";
+
 class UserSearchBookCabs extends React.Component {
   constructor() {
     super();
@@ -24,7 +28,9 @@ class UserSearchBookCabs extends React.Component {
       toQueryString: "",
       toSuggestions: [],
       placesSuggestions: false,
-      instructionsIsOpen: false
+      instructionsIsOpen: false,
+      chooseYourLocationFrom: false,
+      chooseYourLocationTo: false
     };
     this.fromSearchBar = React.createRef();
     this.toSearchBar = React.createRef();
@@ -119,6 +125,68 @@ class UserSearchBookCabs extends React.Component {
     // console.log(this.state.suggestionsIsOpen);
   };
 
+  // toggle Choose your Location
+  toggleChooseYourLocationFrom = () => {
+    this.setState({
+      chooseYourLocationFrom: !this.state.chooseYourLocationFrom
+    });
+  };
+
+  //update User Location in from search Bar
+  updateUserLocationOnFromSearchBar = () => {
+    this.setState({
+      chooseYourLocationFrom: false
+    });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.storePositionFromSearchBar);
+    } else {
+      alert("Geolocation is not supported by this browser");
+    }
+    this.fromSearchBar.current.value = "Your Location";
+  };
+  storePositionFromSearchBar = position => {
+    var originData = {
+      title: "Your Location",
+      originLat: position.coords.latitude,
+      originLon: position.coords.longitude,
+      originIcon:
+        "https://download.vcdn.cit.data.here.com/p/d/places2_stg/icons/categories/06.icon"
+    };
+    //send data from child to parent(UserSearchIndex.js)
+    this.props.updateOriginData(originData);
+  };
+
+  // To searchBar update User  Location
+  // toggle Choose your Location
+  toggleChooseYourLocationTo = () => {
+    this.setState({
+      chooseYourLocationTo: !this.state.chooseYourLocationTo
+    });
+  };
+
+  //update User Location in from search Bar
+  updateUserLocationOnToSearchBar = () => {
+    this.setState({
+      chooseYourLocationTo: false
+    });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.storePositionToSearchBar);
+    } else {
+      alert("Geolocation is not supported by this browser");
+    }
+    this.toSearchBar.current.value = "Your Location";
+  };
+  storePositionToSearchBar = position => {
+    var destinationData = {
+      title: "Your Location",
+      destinationLat: position.coords.latitude,
+      destinationLon: position.coords.longitude,
+      destinationIcon:
+        "https://download.vcdn.cit.data.here.com/p/d/places2_stg/icons/categories/06.icon"
+    };
+    //send data from child to parent(UserSearchIndex.js)
+    this.props.updateDestinationData(destinationData);
+  };
   render() {
     return (
       <div>
@@ -143,6 +211,7 @@ class UserSearchBookCabs extends React.Component {
                   this.onFromChangeHandler(e);
                 }}
                 ref={this.fromSearchBar}
+                onClick={this.toggleChooseYourLocationFrom}
               />
               {/* From suggestions Box */}
               {this.state.suggestionsFromIsOpen ? (
@@ -186,6 +255,23 @@ class UserSearchBookCabs extends React.Component {
                   </div>
                 </div>
               ) : null}
+              {/* Choose Your Location dropdown */}
+              {this.state.chooseYourLocationFrom &&
+              this.fromSearchBar.current.value === "" ? (
+                <div className="positon-relative">
+                  <div className="position-absolute zIndex-plusOne mt-1 w-85">
+                    <ListGroup>
+                      <ListGroup.Item
+                        className="cursor-pointer suggestion-item"
+                        onClick={this.updateUserLocationOnFromSearchBar}
+                      >
+                        <FontAwesomeIcon icon={faMapPin} className="mr-2" />
+                        Use My Location
+                      </ListGroup.Item>
+                    </ListGroup>
+                  </div>
+                </div>
+              ) : null}
             </Form.Group>
             <Form.Group controlId="ToLocation">
               <Form.Label className="text-secondary small font-weight-bold">
@@ -200,6 +286,7 @@ class UserSearchBookCabs extends React.Component {
                   this.onToChangeHandler(e);
                 }}
                 ref={this.toSearchBar}
+                onClick={this.toggleChooseYourLocationTo}
               />
               {/* To suggestions Box */}
               {this.state.suggestionsToIsOpen ? (
@@ -239,6 +326,23 @@ class UserSearchBookCabs extends React.Component {
                             </ListGroup.Item>
                           );
                         })}
+                    </ListGroup>
+                  </div>
+                </div>
+              ) : null}
+              {/* Choose Your Location dropdown */}
+              {this.state.chooseYourLocationTo &&
+              this.toSearchBar.current.value === "" ? (
+                <div className="positon-relative">
+                  <div className="position-absolute zIndex-plusOne mt-1 w-85">
+                    <ListGroup>
+                      <ListGroup.Item
+                        className="cursor-pointer suggestion-item"
+                        onClick={this.updateUserLocationOnToSearchBar}
+                      >
+                        <FontAwesomeIcon icon={faMapPin} className="mr-2" />
+                        Use My Location
+                      </ListGroup.Item>
                     </ListGroup>
                   </div>
                 </div>
