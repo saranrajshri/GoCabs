@@ -20,6 +20,7 @@ import {
   Row
 } from "react-bootstrap";
 
+var destinationData;
 class NavBarHeader extends React.Component {
   constructor() {
     super();
@@ -62,7 +63,7 @@ class NavBarHeader extends React.Component {
     this.searchBar.current.value = destination.title;
 
     // update the destinationArray state for showing route
-    var destinationData = {
+    destinationData = {
       title: destination.title,
       destinationLat: destination.position[0],
       destinationLon: destination.position[1],
@@ -71,6 +72,21 @@ class NavBarHeader extends React.Component {
     this.setState({
       suggestionsIsOpen: false
     });
+
+    // get places suggestions
+    axios
+      .get(
+        "https://places.demo.api.here.com/places/v1/discover/here?at=" +
+          destinationData.destinationLat +
+          "%2C" +
+          destinationData.destinationLon +
+          "&app_id=vjy6uZJ1g8cBFrsFC8qX&app_code=JDE3TVLeWDjefVi30qzdaw"
+      )
+      .then(res => {
+        // send data to index
+        var data = res.data.results.items;
+        this.props.updatePlacesSuggestions(data);
+      });
 
     //send data from child to parent(UserSearchIndex.js)
     this.props.updateDestinationData(destinationData);

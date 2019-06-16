@@ -10,7 +10,6 @@ import UserSearchContext from "./UserSearchContext";
 import { Form, ListGroup, Row, Col, Image } from "react-bootstrap";
 
 //Components
-import UserSearchResults from "./UserSearchResults";
 import UserSearchInstructions from "./UserSearchInstructions";
 
 //FontAwesome
@@ -52,8 +51,7 @@ class UserSearchBookCabs extends React.Component {
   onFromChangeHandler = async e => {
     this.fromSearch(e.target.value);
     this.setState({
-      fromQueryString: e.target.value,
-      placesSuggestions: true
+      fromQueryString: e.target.value
     });
   };
   // From suggestions end
@@ -73,8 +71,7 @@ class UserSearchBookCabs extends React.Component {
   onToChangeHandler = async e => {
     this.toSearch(e.target.value);
     this.setState({
-      toQueryString: e.target.value,
-      placesSuggestions: true
+      toQueryString: e.target.value
     });
   };
 
@@ -117,12 +114,28 @@ class UserSearchBookCabs extends React.Component {
       destinationIcon: destination.icon
     };
     this.setState({
-      suggestionsToIsOpen: false
+      suggestionsToIsOpen: false,
+      placesSuggestions: true
     });
 
     //send data from child to parent(UserSearchIndex.js)
     this.props.updateDestinationData(destinationData);
     // console.log(this.state.suggestionsIsOpen);
+
+    // get places suggestions
+    axios
+      .get(
+        "https://places.demo.api.here.com/places/v1/discover/here?at=" +
+          destinationData.destinationLat +
+          "%2C" +
+          destinationData.destinationLon +
+          "&app_id=vjy6uZJ1g8cBFrsFC8qX&app_code=JDE3TVLeWDjefVi30qzdaw"
+      )
+      .then(res => {
+        // send data to index
+        var data = res.data.results.items;
+        this.props.updatePlacesSuggestions(data);
+      });
   };
 
   // toggle Choose your Location
@@ -186,7 +199,22 @@ class UserSearchBookCabs extends React.Component {
     };
     //send data from child to parent(UserSearchIndex.js)
     this.props.updateDestinationData(destinationData);
+    // get suggestions places
+    axios
+      .get(
+        "https://places.demo.api.here.com/places/v1/discover/here?at=" +
+          destinationData.destinationLat +
+          "%2C" +
+          destinationData.destinationLon +
+          "&app_id=vjy6uZJ1g8cBFrsFC8qX&app_code=JDE3TVLeWDjefVi30qzdaw"
+      )
+      .then(res => {
+        // send data to index
+        var data = res.data.results.items;
+        this.props.updatePlacesSuggestions(data);
+      });
   };
+
   render() {
     return (
       <div>
@@ -350,7 +378,6 @@ class UserSearchBookCabs extends React.Component {
             </Form.Group>
           </Form>
         </div>
-        <UserSearchResults isOpen={this.state.placesSuggestions} />
         <UserSearchInstructions />
       </div>
     );

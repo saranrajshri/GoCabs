@@ -10,6 +10,7 @@ import { Row, Col, Container } from "react-bootstrap";
 import NavBarHeader from "../Global/NavBarHeader";
 import UserSearchMap from "./UserSearchMap";
 import UserSearchBookCabs from "./UserSearchBookCabs";
+import UserSearchPlacesResults from "./UserSearchPlacesResults";
 
 class UserSearchIndex extends React.Component {
   constructor() {
@@ -18,7 +19,8 @@ class UserSearchIndex extends React.Component {
       destinationData: "",
       originData: "",
       routeSummary: [],
-      showDirectionsIsOpen: false
+      showDirectionsIsOpen: false,
+      placesSuggestions: []
     };
   }
 
@@ -44,20 +46,36 @@ class UserSearchIndex extends React.Component {
     });
   };
 
+  updatePlacesSuggestions = data => {
+    this.setState({
+      placesSuggestions: data
+    });
+  };
   render() {
-    console.log("origin->", this.state.originData);
-    console.log("destin-<>=", this.state.destinationData);
+    // console.log(this.state.placesSuggestions);
     return (
-      <UserSearchContext.Provider value={this.state}>
+      <UserSearchContext.Provider
+        value={{
+          ...this.state,
+          updateDestinationData: this.updateDestinationData
+        }}
+      >
         <div>
-          <NavBarHeader updateDestinationData={this.updateDestinationData} />
+          <NavBarHeader
+            updateDestinationData={this.updateDestinationData}
+            updatePlacesSuggestions={this.updatePlacesSuggestions}
+          />
           <Container fluid={true}>
             <Row>
               <Col md={4} className="p-3">
                 <UserSearchBookCabs
                   updateOriginData={this.updateOriginData}
                   updateDestinationData={this.updateDestinationData}
+                  updatePlacesSuggestions={this.updatePlacesSuggestions}
                 />
+                {this.state.destinationData.title !== undefined ? (
+                  <UserSearchPlacesResults />
+                ) : null}
               </Col>
               <Col md={8}>
                 <UserSearchMap updateRouteSummary={this.updateRouteSummary} />

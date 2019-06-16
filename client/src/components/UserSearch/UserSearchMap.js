@@ -33,6 +33,8 @@ class UserSearchMap extends React.Component {
     ) {
       // if both data exists render showRoute Page else show search page
       baseURL = "maps/showRoute.html?";
+
+      // Get instructions
       axios
         .get(
           "https://route.api.here.com/routing/7.2/calculateroute.json?app_id=vjy6uZJ1g8cBFrsFC8qX&app_code=JDE3TVLeWDjefVi30qzdaw&waypoint0=" +
