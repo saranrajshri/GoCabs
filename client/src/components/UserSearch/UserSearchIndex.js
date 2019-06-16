@@ -20,7 +20,8 @@ class UserSearchIndex extends React.Component {
       originData: "",
       routeSummary: [],
       showDirectionsIsOpen: false,
-      placesSuggestions: []
+      placesSuggestions: [],
+      userData: {}
     };
   }
 

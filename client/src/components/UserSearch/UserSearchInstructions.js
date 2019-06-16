@@ -10,11 +10,15 @@ import { Row, Col, Collapse, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
+// Components
+import UserSearchLoginModal from "./UserSearchLoginModal";
+
 class UserSearchInstructions extends React.Component {
   constructor() {
     super();
     this.state = {
-      isInstructionsOpen: false
+      isInstructionsOpen: false,
+      loginAndRegiterModalIsOpen: false
     };
   }
 
@@ -23,6 +27,25 @@ class UserSearchInstructions extends React.Component {
     this.setState({
       isInstructionsOpen: !this.state.isInstructionsOpen
     });
+  };
+
+  // Search For Drivers
+  searchForDrivers = () => {
+    if (this.context.userData._id === undefined) {
+      // Open Modal
+      this.handleShow();
+    } else {
+      alert("logged in");
+    }
+  };
+
+  // Modal
+  handleClose = () => {
+    this.setState({ loginAndRegiterModalIsOpen: false });
+  };
+
+  handleShow = () => {
+    this.setState({ loginAndRegiterModalIsOpen: true });
   };
 
   render() {
@@ -43,7 +66,11 @@ class UserSearchInstructions extends React.Component {
               {"(In Current Traffic Conditions)"}
             </span>
           </p>
-          <Button variant="warning text-dark" size="sm">
+          <Button
+            variant="warning text-dark"
+            size="sm"
+            onClick={this.searchForDrivers}
+          >
             Search Drivers
           </Button>
         </div>
@@ -99,6 +126,10 @@ class UserSearchInstructions extends React.Component {
             </div>
           </Collapse>
         </div>
+        <UserSearchLoginModal
+          isOpen={this.state.loginAndRegiterModalIsOpen}
+          handleClose={this.handleClose}
+        />
       </div>
     );
   }
