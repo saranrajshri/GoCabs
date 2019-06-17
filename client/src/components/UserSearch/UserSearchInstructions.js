@@ -12,13 +12,15 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 // Components
 import UserSearchLoginModal from "./UserSearchLoginModal";
+import UserSearchDriversModal from "./UserSearchDriversModal";
 
 class UserSearchInstructions extends React.Component {
   constructor() {
     super();
     this.state = {
       isInstructionsOpen: false,
-      loginAndRegiterModalIsOpen: false
+      loginAndRegiterModalIsOpen: false,
+      showDriversModalIsOpen: false
     };
   }
 
@@ -48,6 +50,12 @@ class UserSearchInstructions extends React.Component {
     this.setState({ loginAndRegiterModalIsOpen: true });
   };
 
+  // Show Drivers Modal
+  showDriversModal = () => {
+    this.setState({
+      showDriversModalIsOpen: true
+    });
+  };
   render() {
     return (
       <div hidden={!this.context.showDirectionsIsOpen}>
@@ -129,6 +137,13 @@ class UserSearchInstructions extends React.Component {
         <UserSearchLoginModal
           isOpen={this.state.loginAndRegiterModalIsOpen}
           handleClose={this.handleClose}
+          showDrivers={this.showDriversModal}
+        />
+        <UserSearchDriversModal
+          isOpen={this.state.showDriversModalIsOpen}
+          handleClose={() => {
+            this.setState({ showDriversModalIsOpen: false });
+          }}
         />
       </div>
     );

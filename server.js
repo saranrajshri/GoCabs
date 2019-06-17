@@ -9,7 +9,7 @@ const config = require("./config/database");
 
 //Routes
 const userRoutes = require("./routes/UserRoutes");
-
+const driverRoutes = require("./routes/DriverRoutes");
 // session
 app.use(
   session({
@@ -39,6 +39,7 @@ app.use(bodyParser.json());
 
 // Use routes
 app.use("/api/user", userRoutes);
+app.use("/api/driver", driverRoutes);
 // Running Port
 const port = process.eventNames.PORT || 8000;
 app.listen(port, () => {

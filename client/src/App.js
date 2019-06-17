@@ -9,6 +9,8 @@ import "bootstrap/dist/css/bootstrap.css";
 
 //Components
 import UserSearchIndex from "./components/UserSearch/UserSearchIndex";
+import DriverLoginIndex from "./components/DriverPage/DriverLogin/DriverLoginIndex";
+import DriverDashBoardIndex from "./components/DriverPage/DriverDashBoard/DriverDashBoardIndex";
 
 //React Router(dont change the order of this react router)
 const Route = require("react-router-dom").Route;
@@ -18,6 +20,12 @@ function App() {
     <div className="App">
       <Router>
         <Route path="/search" exact component={UserSearchIndex} />
+        <Route path="/driver/login" exact component={DriverLoginIndex} />
+        <Route
+          path="/driver/dashboard"
+          exact
+          component={DriverDashBoardIndex}
+        />
       </Router>
     </div>
   );

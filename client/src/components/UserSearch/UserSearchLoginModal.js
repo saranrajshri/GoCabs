@@ -129,6 +129,7 @@ class UserSearchLoginModal extends React.Component {
       .then(res => {
         this.context.updateUserData(res.data);
         this.props.handleClose();
+        this.props.showDrivers();
       })
       .catch(err => {
         if (err.response) {
