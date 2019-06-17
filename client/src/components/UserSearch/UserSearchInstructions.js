@@ -31,7 +31,7 @@ class UserSearchInstructions extends React.Component {
 
   // Search For Drivers
   searchForDrivers = () => {
-    if (this.context.userData._id === undefined) {
+    if (this.context.userData.id === undefined) {
       // Open Modal
       this.handleShow();
     } else {

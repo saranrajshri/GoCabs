@@ -22,7 +22,8 @@ class UserSearchLoginModal extends React.Component {
       userNameError: "",
       passwordError: "",
       loginEmail: "",
-      loginPassword: ""
+      loginPassword: "",
+      loginError: ""
     };
   }
 
@@ -128,6 +129,19 @@ class UserSearchLoginModal extends React.Component {
       .then(res => {
         this.context.updateUserData(res.data);
         this.props.handleClose();
+      })
+      .catch(err => {
+        if (err.response) {
+          if (err.response.status === 404) {
+            this.setState({
+              loginError: "No users found"
+            });
+          } else if (err.response.status === 401) {
+            this.setState({
+              loginError: "Wrong information"
+            });
+          }
+        }
       });
   };
 
@@ -155,6 +169,9 @@ class UserSearchLoginModal extends React.Component {
                       name="loginEmail"
                       onChange={this.updateLoginState}
                     />
+                    <Form.Text className="text-danger">
+                      {this.state.loginError}
+                    </Form.Text>
                   </Form.Group>
 
                   <Form.Group controlId="formBasicPassword">

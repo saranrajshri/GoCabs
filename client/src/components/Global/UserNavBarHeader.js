@@ -1,5 +1,8 @@
 import React from "react";
 
+// importing Context
+import UserSearchContext from "../UserSearch/UserSearchContext";
+
 //Axios
 import axios from "axios";
 
@@ -170,11 +173,24 @@ class UserNavBarHeader extends React.Component {
             ) : null}
           </Col>
 
-          <Nav className="mr-auto ml-5">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Register</Nav.Link>
-            <Nav.Link href="#pricing">Login</Nav.Link>
-          </Nav>
+          {this.context.userData.username === undefined ? (
+            <Nav className="mr-auto ml-5">
+              <Nav.Link href="#home">Home</Nav.Link>
+              <Nav.Link href="#features">Register</Nav.Link>
+              <Nav.Link href="#pricing">Login</Nav.Link>
+            </Nav>
+          ) : (
+            <Nav className="mr-auto ml-5">
+              <Nav.Link href="#home">Home</Nav.Link>
+              <Nav.Link href="#features">
+                Hello{" "}
+                <span className="text-warning">
+                  {this.context.userData.username}
+                </span>
+              </Nav.Link>
+            </Nav>
+          )}
+
           <Button variant="warning" className="text-dark pl-4 pr-4 rounded">
             Book A Cab
           </Button>
@@ -183,4 +199,5 @@ class UserNavBarHeader extends React.Component {
     );
   }
 }
+UserNavBarHeader.contextType = UserSearchContext;
 export default UserNavBarHeader;
