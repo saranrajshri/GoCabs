@@ -1,5 +1,8 @@
 import React from "react";
 
+// axios
+import axios from "axios";
+
 //Importing Context
 import UserSearchContext from "./UserSearchContext";
 
@@ -52,13 +55,30 @@ class UserSearchIndex extends React.Component {
       placesSuggestions: data
     });
   };
+
+  updateUserData = data => {
+    this.setState({
+      userData: data
+    });
+  };
+
+  componentDidMount() {
+    // send who am i request
+    axios.post("http://localhost:8000/api/user/whoami", {}).then(res => {
+      if (res.data) {
+        this.setState({ userData: res.data });
+      }
+    });
+  }
   render() {
     // console.log(this.state.placesSuggestions);
+    // console.log(this.state.userData);
     return (
       <UserSearchContext.Provider
         value={{
           ...this.state,
-          updateDestinationData: this.updateDestinationData
+          updateDestinationData: this.updateDestinationData,
+          updateUserData: this.updateUserData
         }}
       >
         <div>
