@@ -14,7 +14,9 @@ class DriverLoginForm extends React.Component {
     super();
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      driverLat: "",
+      driverLon: ""
     };
   }
   // update State
@@ -23,6 +25,7 @@ class DriverLoginForm extends React.Component {
       [e.target.name]: e.target.value
     });
   };
+
   login = () => {
     axios
       .post("http://localhost:8000/api/driver/loginDriver", {
@@ -31,9 +34,31 @@ class DriverLoginForm extends React.Component {
       })
       .then(res => {
         this.context.updateDriverData(res.data);
+        axios.put("http://localhost:8000/api/driver/updateDriverLocation", {
+          driverID: this.context.driverData.id,
+          lat: this.state.driverLat,
+          lon: this.state.driverLon
+        });
         window.location = "/driver/dashboard";
       });
   };
+
+  getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.showPosition);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  };
+  showPosition = position => {
+    this.setState({
+      driverLat: position.coords.latitude,
+      driverLon: position.coords.longitude
+    });
+  };
+  componentDidMount() {
+    this.getLocation();
+  }
   render() {
     return (
       <div className="bg-white rounded p-3">

@@ -34,5 +34,6 @@
 .bg-white{
     background-color: #fff
 }
-
-
+.overflow-x-hidden{
+    overflow-x:hidden
+}

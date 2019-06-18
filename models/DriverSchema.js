@@ -10,6 +10,22 @@ const DriverSchema = new Schema({
   },
   password: {
     type: String
+  },
+
+  lat: {
+    type: Number
+  },
+  lon: {
+    type: Number
+  },
+  vechileName: {
+    type: String
+  },
+  vechileNumber: {
+    type: String
+  },
+  capacity: {
+    type: Number
   }
 });
 const DriverUser = mongoose.model("driver", DriverSchema);

@@ -17,7 +17,7 @@ const Route = require("react-router-dom").Route;
 
 function App() {
   return (
-    <div className="App">
+    <div className="App overflow-x-hidden">
       <Router>
         <Route path="/search" exact component={UserSearchIndex} />
         <Route path="/driver/login" exact component={DriverLoginIndex} />

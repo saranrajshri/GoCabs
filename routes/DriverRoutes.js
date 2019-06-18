@@ -79,4 +79,13 @@ router.post(
   }
 );
 
+// update driver location
+router.put("/updateDriverLocation", function(req, res) {
+  Driver.findOneAndUpdate(
+    { _id: req.body.driverID },
+    { lat: req.body.lat, lon: req.body.lon }
+  ).then(function(response) {
+    res.send(response);
+  });
+});
 module.exports = router;

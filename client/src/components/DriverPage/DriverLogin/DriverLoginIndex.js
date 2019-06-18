@@ -23,7 +23,7 @@ class DriverLoginIndex extends React.Component {
     });
   };
   render() {
-    console.log(this.state.driverData);
+    // console.log(this.state.driverData);
     return (
       <DriverLoginContext.Provider
         value={{ ...this.state, updateDriverData: this.updateDriverData }}
