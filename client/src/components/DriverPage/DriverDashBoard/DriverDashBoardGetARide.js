@@ -19,7 +19,7 @@ class DriverDashBoardGetARide extends React.Component {
   }
 
   listenForCustomers = () => {
-    // console.log(this.context.driverData, this.state.searchingCustomers);
+    // console.log(   this.context.driverData, this.state.searchingCustomers);
     if (this.context.driverData.coordinates !== []) {
       axios
         .post("http://localhost:8000/api/user/findNearByUsers", {
@@ -102,19 +102,6 @@ class DriverDashBoardGetARide extends React.Component {
                 {this.state.viewButtons ? (
                   <Button
                     onClick={() => {
-                      var orderData = {
-                        userid: details._id,
-                        orginLat: this.state.searchingCustomers[0]
-                          .originData[0],
-                        originLon: this.state.searchingCustomers[0]
-                          .originData[1],
-                        destinationLat: this.state.searchingCustomers[0]
-                          .destinationData[0],
-                        destinationLon: this.state.searchingCustomers[0]
-                          .destinationData[1],
-                        originTitle: this.state.customerFromAddress,
-                        destinationTitle: this.state.customerToAddress
-                      };
                       axios.put("http://localhost:8000/api/user/bookcab", {
                         userid: details._id
                       });
