@@ -77,6 +77,7 @@ class UserSearchLoginModal extends React.Component {
               .then(res => {
                 this.context.updateUserData(res.data);
                 this.props.handleClose();
+                this.updateDetailsToDB();
               })
               .catch(err => {
                 console.log(err);
@@ -130,6 +131,8 @@ class UserSearchLoginModal extends React.Component {
         this.context.updateUserData(res.data);
         this.props.handleClose();
         this.props.showDrivers();
+        // update details
+        this.updateDetailsToDB();
       })
       .catch(err => {
         if (err.response) {
@@ -144,6 +147,17 @@ class UserSearchLoginModal extends React.Component {
           }
         }
       });
+  };
+
+  // update all details to db
+  updateDetailsToDB = () => {
+    axios.put("http://localhost:8000/api/user/updateUserSchema", {
+      id: this.context.userData.id,
+      originLat: this.context.originData.originLat,
+      originLon: this.context.originData.originLon,
+      destinationLat: this.context.destinationData.destinationLat,
+      destinationLon: this.context.destinationData.destinationLon
+    });
   };
 
   render() {

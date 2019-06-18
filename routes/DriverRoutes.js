@@ -26,7 +26,8 @@ router.post("/addDriver", function(req, res) {
         var data = {
           username: req.body.username,
           email: req.body.email,
-          password: hashedPassword
+          password: hashedPassword,
+          location: { coordinates: [0, 0] }
         };
         var user = new Driver(data);
         user.save().then(function(response) {
@@ -50,7 +51,8 @@ router.post("/loginDriver", function(req, res) {
           var user = {
             username: req.session.user.username,
             email: req.session.user.email,
-            id: req.session.user.id
+            id: req.session.user.id,
+            coordinates: req.session.user.location.coordinates
           };
           driverSess = user;
           req.session.user = driverSess;
@@ -83,8 +85,28 @@ router.post(
 router.put("/updateDriverLocation", function(req, res) {
   Driver.findOneAndUpdate(
     { _id: req.body.driverID },
-    { lat: req.body.lat, lon: req.body.lon }
+    { location: req.body.location }
   ).then(function(response) {
+    res.send(response);
+  });
+});
+
+//find nearby drivers
+router.post("/findNearByDrivers", function(req, res) {
+  Driver.aggregate([
+    {
+      $geoNear: {
+        near: {
+          type: "Point",
+          coordinates: [parseFloat(req.body.lat), parseFloat(req.body.lon)]
+        },
+        key: "location",
+        distanceField: "distance",
+        maxDistance: 50000,
+        spherical: true
+      }
+    }
+  ]).then(response => {
     res.send(response);
   });
 });

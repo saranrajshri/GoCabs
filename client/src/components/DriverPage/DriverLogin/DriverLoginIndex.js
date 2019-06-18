@@ -30,7 +30,7 @@ class DriverLoginIndex extends React.Component {
       >
         <div
           style={{
-            backgroundImage: "url(../images/bg.jpg)",
+            // backgroundImage: "url(../images/bg.jpg)",
             backgroundSize: "cover"
           }}
         >

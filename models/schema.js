@@ -10,6 +10,21 @@ const UserSchema = new Schema({
   },
   password: {
     type: String
+  },
+  location: {
+    coordinates: {
+      type: [Number],
+      index: "2dsphere"
+    }
+  },
+  searchingForCabs: {
+    type: Boolean
+  },
+  originData: {
+    type: [Number]
+  },
+  destinationData: {
+    type: [Number]
   }
 });
 const User = mongoose.model("user", UserSchema);

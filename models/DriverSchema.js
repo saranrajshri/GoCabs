@@ -12,12 +12,6 @@ const DriverSchema = new Schema({
     type: String
   },
 
-  lat: {
-    type: Number
-  },
-  lon: {
-    type: Number
-  },
   vechileName: {
     type: String
   },
@@ -26,6 +20,13 @@ const DriverSchema = new Schema({
   },
   capacity: {
     type: Number
+  },
+
+  location: {
+    coordinates: {
+      type: [Number],
+      index: "2dsphere"
+    }
   }
 });
 const DriverUser = mongoose.model("driver", DriverSchema);

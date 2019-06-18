@@ -26,7 +26,13 @@ router.post("/addUser", function(req, res) {
         var data = {
           username: req.body.username,
           email: req.body.email,
-          password: hashedPassword
+          password: hashedPassword,
+          location: {
+            coordinates: [0, 0]
+          },
+          searchingForCabs: false,
+          originData: [],
+          destinationData: []
         };
         var user = new User(data);
         user.save().then(function(response) {
@@ -78,5 +84,37 @@ router.post(
     res.send(null);
   }
 );
-
+// update details to user schema
+router.put("/updateUserSchema", function(req, res) {
+  User.findOneAndUpdate(
+    { _id: req.body.id },
+    {
+      searchingForCabs: true,
+      originData: [req.body.originLat, req.body.originLon],
+      destinationData: [req.body.destinationLat, req.body.destinationLon]
+    }
+  ).then(response => {
+    res.send(response);
+  });
+});
+//find nearby drivers
+router.post("/findNearByUsers", function(req, res) {
+  User.aggregate([
+    {
+      $geoNear: {
+        near: {
+          type: "Point",
+          coordinates: [parseFloat(req.body.lat), parseFloat(req.body.lon)]
+        },
+        key: "location",
+        distanceField: "distance",
+        maxDistance: 50000,
+        spherical: true,
+        query: { searchingForCabs: true }
+      }
+    }
+  ]).then(response => {
+    res.send(response);
+  });
+});
 module.exports = router;

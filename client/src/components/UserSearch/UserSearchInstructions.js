@@ -1,5 +1,8 @@
 import React from "react";
 
+// impoorting axios
+import axios from "axios";
+
 // Importing Context
 import UserSearchContext from "./UserSearchContext";
 
@@ -35,9 +38,10 @@ class UserSearchInstructions extends React.Component {
   searchForDrivers = () => {
     if (this.context.userData.id === undefined) {
       // Open Modal
+      this.updateDetailsToDB();
       this.handleShow();
     } else {
-      alert("logged in");
+      this.setState({ showDriversModalIsOpen: true });
     }
   };
 
@@ -54,6 +58,17 @@ class UserSearchInstructions extends React.Component {
   showDriversModal = () => {
     this.setState({
       showDriversModalIsOpen: true
+    });
+  };
+
+  // update all details to db
+  updateDetailsToDB = () => {
+    axios.put("http://localhost:8000/api/user/updateUserSchema", {
+      id: this.context.userData.id,
+      originLat: this.context.originData.originLat,
+      originLon: this.context.originData.originLon,
+      destinationLat: this.context.destinationData.destinationLat,
+      destinationLon: this.context.destinationData.destinationLon
     });
   };
   render() {

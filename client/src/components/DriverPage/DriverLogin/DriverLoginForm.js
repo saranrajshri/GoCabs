@@ -36,8 +36,9 @@ class DriverLoginForm extends React.Component {
         this.context.updateDriverData(res.data);
         axios.put("http://localhost:8000/api/driver/updateDriverLocation", {
           driverID: this.context.driverData.id,
-          lat: this.state.driverLat,
-          lon: this.state.driverLon
+          location: {
+            coordinates: [this.state.driverLat, this.state.driverLon]
+          }
         });
         window.location = "/driver/dashboard";
       });

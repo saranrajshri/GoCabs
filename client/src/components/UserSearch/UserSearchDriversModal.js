@@ -1,4 +1,6 @@
 import React from "react";
+// importing context
+import UserSearchContext from "./UserSearchContext";
 
 // Bootstrap Components
 import { Modal, Button } from "react-bootstrap";
@@ -28,4 +30,5 @@ class UserSearchDriversModal extends React.Component {
     }
   }
 }
+UserSearchDriversModal.contextType = UserSearchContext;
 export default UserSearchDriversModal;
