@@ -18,7 +18,13 @@ class UserSearchDriversModal extends React.Component {
               Woohoo, you're reading this text in a modal!
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={this.props.handleClose}>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  this.props.handleClose();
+                  this.context.deleteDataFromDB();
+                }}
+              >
                 Close
               </Button>
             </Modal.Footer>

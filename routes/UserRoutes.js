@@ -91,7 +91,10 @@ router.put("/updateUserSchema", function(req, res) {
     {
       searchingForCabs: true,
       originData: [req.body.originLat, req.body.originLon],
-      destinationData: [req.body.destinationLat, req.body.destinationLon]
+      destinationData: [req.body.destinationLat, req.body.destinationLon],
+      location: { coordinates: [req.body.userLat, req.body.userLon] },
+      originTitle: req.body.originTitle,
+      destinationTitle: req.body.destinationTitle
     }
   ).then(response => {
     res.send(response);
@@ -110,11 +113,38 @@ router.post("/findNearByUsers", function(req, res) {
         distanceField: "distance",
         maxDistance: 50000,
         spherical: true,
-        query: { searchingForCabs: true }
+        query: { searchingForCabs: true, orderAccepted: "no" }
       }
     }
   ]).then(response => {
     res.send(response);
   });
 });
+
+// delete data from db
+router.post("/deleteDataFromDB", function(req, res) {
+  User.findOneAndUpdate(
+    { _id: req.body.id },
+    {
+      originData: [],
+      destinationData: [],
+      searchingForCabs: false,
+      originTitle: "",
+      destinationTitle: ""
+    }
+  ).then(response => {
+    res.send(response);
+  });
+});
+
+// update as cab booked
+router.put("/bookcab", function(req, res) {
+  User.findOneAndUpdate(
+    { _id: req.body.userid },
+    { searchingForCabs: false, orderAccepted: "yes" }
+  ).then(response => {
+    res.send(response);
+  });
+});
+
 module.exports = router;

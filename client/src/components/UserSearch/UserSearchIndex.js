@@ -62,6 +62,19 @@ class UserSearchIndex extends React.Component {
     });
   };
 
+  deleteDataFromDB = () => {
+    axios
+      .post("http://localhost:8000/api/user/deleteDataFromDB", {
+        id: this.state.userData.id
+      })
+      .then(response => {
+        this.setState({
+          userData: response
+        });
+      });
+    console.log("deleted");
+  };
+
   componentDidMount() {
     // send who am i request
     axios.post("http://localhost:8000/api/user/whoami", {}).then(res => {
@@ -78,7 +91,8 @@ class UserSearchIndex extends React.Component {
         value={{
           ...this.state,
           updateDestinationData: this.updateDestinationData,
-          updateUserData: this.updateUserData
+          updateUserData: this.updateUserData,
+          deleteDataFromDB: this.deleteDataFromDB
         }}
       >
         <div>

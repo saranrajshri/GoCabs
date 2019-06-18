@@ -18,9 +18,17 @@ class DriverDashBoardIndex extends React.Component {
   constructor() {
     super();
     this.state = {
-      driverData: []
+      driverData: [],
+      orderData: []
     };
   }
+
+  updateOrderData = data => {
+    this.setState({
+      orderData: data
+    });
+  };
+
   componentDidMount() {
     axios.post("http://localhost:8000/api/driver/whoami", {}).then(res => {
       if (res.data) {
@@ -31,8 +39,14 @@ class DriverDashBoardIndex extends React.Component {
 
   render() {
     // console.log(this.state.driverData);
+    console.log(this.state.orderData.userid);
     return (
-      <DriverDashBoardContext.Provider value={this.state}>
+      <DriverDashBoardContext.Provider
+        value={{
+          ...this.state,
+          updateOrderData: this.updateOrderData
+        }}
+      >
         <div>
           <DriverNavBarHeader />
           <Row className="p-3">

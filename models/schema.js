@@ -25,6 +25,15 @@ const UserSchema = new Schema({
   },
   destinationData: {
     type: [Number]
+  },
+  originTitle: {
+    type: String
+  },
+  destinationTitle: {
+    type: String
+  },
+  orderAccepted: {
+    type: String
   }
 });
 const User = mongoose.model("user", UserSchema);

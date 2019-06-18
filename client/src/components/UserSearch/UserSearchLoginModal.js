@@ -23,7 +23,9 @@ class UserSearchLoginModal extends React.Component {
       passwordError: "",
       loginEmail: "",
       loginPassword: "",
-      loginError: ""
+      loginError: "",
+      userLat: "",
+      userLon: ""
     };
   }
 
@@ -149,17 +151,38 @@ class UserSearchLoginModal extends React.Component {
       });
   };
 
+  // get coordinates of the user
+  getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.showPosition);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  };
+  showPosition = position => {
+    this.setState({
+      userLat: position.coords.latitude,
+      userLon: position.coords.longitude
+    });
+  };
   // update all details to db
   updateDetailsToDB = () => {
     axios.put("http://localhost:8000/api/user/updateUserSchema", {
       id: this.context.userData.id,
       originLat: this.context.originData.originLat,
       originLon: this.context.originData.originLon,
+      originTitle: this.context.originData.title,
       destinationLat: this.context.destinationData.destinationLat,
-      destinationLon: this.context.destinationData.destinationLon
+      destinationLon: this.context.destinationData.destinationLon,
+      destinationTitle: this.context.destinationData.title,
+      userLat: this.state.userLat,
+      userLon: this.state.userLon
     });
   };
 
+  componentDidMount() {
+    this.getLocation();
+  }
   render() {
     if (this.props.isOpen) {
       return (
