@@ -32,7 +32,8 @@ router.post("/addUser", function(req, res) {
           },
           searchingForCabs: false,
           originData: [],
-          destinationData: []
+          destinationData: [],
+          orderAccepted: "no"
         };
         var user = new User(data);
         user.save().then(function(response) {
@@ -141,7 +142,11 @@ router.post("/deleteDataFromDB", function(req, res) {
 router.put("/bookcab", function(req, res) {
   User.findOneAndUpdate(
     { _id: req.body.userid },
-    { searchingForCabs: false, orderAccepted: "yes" }
+    {
+      searchingForCabs: false,
+      orderAccepted: "yes",
+      driverID: req.body.driverid
+    }
   ).then(response => {
     res.send(response);
   });

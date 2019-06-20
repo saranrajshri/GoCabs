@@ -103,8 +103,11 @@ class DriverDashBoardGetARide extends React.Component {
                   <Button
                     onClick={() => {
                       axios.put("http://localhost:8000/api/user/bookcab", {
-                        userid: details._id
+                        userid: details._id,
+                        driverid: this.context.driverData.id
                       });
+                      window.location =
+                        "http://localhost:3000/driver/dashboard";
                     }}
                   >
                     Accept Order

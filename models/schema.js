@@ -34,6 +34,9 @@ const UserSchema = new Schema({
   },
   orderAccepted: {
     type: String
+  },
+  driverID: {
+    type: String
   }
 });
 const User = mongoose.model("user", UserSchema);

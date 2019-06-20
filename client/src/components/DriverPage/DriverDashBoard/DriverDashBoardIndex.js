@@ -8,7 +8,7 @@ import DriverDashBoardContext from "./DriverDashBoardContext";
 
 //Components
 import DriverNavBarHeader from "../../Global/DriverNavBarHeader";
-import DriverDashBoardSideBar from "./DriverDashBoardSideBar";
+// import DriverDashBoardSideBar from "./DriverDashBoardSideBar";
 import DriverDashBoardRightSide from "./DriverDashBoardRightSide";
 
 // Bootstrap Components
@@ -38,8 +38,9 @@ class DriverDashBoardIndex extends React.Component {
   }
 
   render() {
+    
     // console.log(this.state.driverData);
-    console.log(this.state.orderData.userid);
+    console.log(this.state.orderData);
     return (
       <DriverDashBoardContext.Provider
         value={{
@@ -50,10 +51,8 @@ class DriverDashBoardIndex extends React.Component {
         <div>
           <DriverNavBarHeader />
           <Row className="p-3">
-            <Col md={3}>
-              <DriverDashBoardSideBar />
-            </Col>
-            <Col md={9}>
+            {/* <Col md={3}><DriverDashBoardSideBar /></Col> */}
+            <Col md={12}>
               <DriverDashBoardRightSide />
             </Col>
           </Row>

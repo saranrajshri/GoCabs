@@ -6,6 +6,10 @@ import UserSearchContext from "./UserSearchContext";
 import { Modal, Button } from "react-bootstrap";
 
 class UserSearchDriversModal extends React.Component {
+  searchIfOrderAccepted = () => {
+    console.log("hello");
+  };
+
   render() {
     if (this.props.isOpen) {
       return (
@@ -14,9 +18,7 @@ class UserSearchDriversModal extends React.Component {
             <Modal.Header closeButton>
               <Modal.Title>Searching For Drivers</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-              Woohoo, you're reading this text in a modal!
-            </Modal.Body>
+            <Modal.Body>{this.searchIfOrderAccepted}</Modal.Body>
             <Modal.Footer>
               <Button
                 variant="secondary"

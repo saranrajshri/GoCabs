@@ -84,10 +84,10 @@ class UserSearchInstructions extends React.Component {
       id: this.context.userData.id,
       originLat: this.context.originData.originLat,
       originLon: this.context.originData.originLon,
-      originTitle:this.context.originData.title,
+      originTitle: this.context.originData.title,
       destinationLat: this.context.destinationData.destinationLat,
       destinationLon: this.context.destinationData.destinationLon,
-      destinationTitle:this.context.destinationData.title,
+      destinationTitle: this.context.destinationData.title,
       userLat: this.state.userLat,
       userLon: this.state.userLon
     });
