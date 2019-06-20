@@ -45,14 +45,11 @@ class DriverDashBoardGetARide extends React.Component {
     this.setState({ viewButtons: true });
   };
 
-  // acceptOrder = userID => {
-  // };
   render() {
     // console.log(this.state.customerFromAddress, this.state.customerToAddress);
     // if (this.state.searchingCustomers !== "") {
-    //   console.log(this.state.searchingCustomers[0].originData);
+    //   console.log(this.state.searchingCustomers[0]);
     // }
-    // console.log(this.context.orderData);
     return (
       <div className="border border-muted p-3 mt-3">
         <Row
@@ -106,8 +103,18 @@ class DriverDashBoardGetARide extends React.Component {
                         userid: details._id,
                         driverid: this.context.driverData.id
                       });
-                      window.location =
-                        "http://localhost:3000/driver/dashboard";
+                      axios.post("http://localhost:8000/api/order/addOrder", {
+                        userid: details._id,
+                        driverid: this.context.driverData.id,
+                        originLat: details.originData[0],
+                        originLon: details.originData[1],
+                        originTitle: details.originTitle,
+                        destinationLat: details.destinationData[0],
+                        destinationLon: details.destinationData[1],
+                        destinationTitle: details.destinationTitle,
+                        isRideFinished: false
+                      });
+                      window.location = "/driver/dashboard";
                     }}
                   >
                     Accept Order

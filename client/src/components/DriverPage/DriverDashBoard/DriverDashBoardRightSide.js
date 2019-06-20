@@ -1,11 +1,16 @@
 import React from "react";
 
+// importing context
+import DriverDashBoardContext from "./DriverDashBoardContext";
+
 // Bootstrap Components
 import { Tabs, Tab } from "react-bootstrap";
 
 // Components
 import DriverDashBoardPickupsToDo from "./DriverDashBoardPickupsToDo";
 import DriverDashBoardGetARide from "./DriverDashBoardGetARide";
+// axios
+import axios from "axios";
 
 class DriverDashBoardRightSide extends React.Component {
   render() {
@@ -26,4 +31,5 @@ class DriverDashBoardRightSide extends React.Component {
     );
   }
 }
+DriverDashBoardRightSide.contextType = DriverDashBoardContext;
 export default DriverDashBoardRightSide;

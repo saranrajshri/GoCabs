@@ -1,5 +1,7 @@
 import React from "react";
 
+// importing  context
+import DriverDashBoardContext from "./DriverDashBoardContext";
 // Bootsrap components
 import { Row, Col, Button } from "react-bootstrap";
 
@@ -7,8 +9,33 @@ import { Row, Col, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
+// axios
+import axios from "axios";
+
 class DriverDashBoardPickUpsToDoSideBar extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      orderData: []
+    };
+  }
+
+  getUserData = () => {
+    axios
+      .post("http://localhost:8000/api/user/getUserDetails", {
+        userid: this.props.orderData.userid
+      })
+      .then(response => {
+        console.log(response);
+      });
+  };
+  componentDidMount() {
+    this.interval = setInterval(() => {
+      this.getUserData();
+    }, 1000);
+  }
   render() {
+    // console.log(this.context.orderData);
     return (
       <div className="p-2">
         <div className="border border-muted p-2 mb-2">
@@ -64,14 +91,17 @@ class DriverDashBoardPickUpsToDoSideBar extends React.Component {
           <Row>
             <Col>
               <p className="small text-secondary">
-                Pickup:<span className="font-weight-bold">Kundrathur</span>
+                Pickup:
+                <span className="font-weight-bold">
+                  {this.props.orderData.originTitle}
+                </span>
               </p>
             </Col>
             <Col>
               <p className="small text-secondary">
                 Drop:
                 <span className="font-weight-bold">
-                  Chennai Institute of Technology
+                  {this.props.orderData.destinationTitle}
                 </span>
               </p>
             </Col>
@@ -115,4 +145,5 @@ class DriverDashBoardPickUpsToDoSideBar extends React.Component {
     );
   }
 }
+DriverDashBoardPickUpsToDoSideBar.contextType = DriverDashBoardContext;
 export default DriverDashBoardPickUpsToDoSideBar;

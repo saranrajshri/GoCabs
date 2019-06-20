@@ -8,7 +8,6 @@ import DriverDashBoardContext from "./DriverDashBoardContext";
 
 //Components
 import DriverNavBarHeader from "../../Global/DriverNavBarHeader";
-// import DriverDashBoardSideBar from "./DriverDashBoardSideBar";
 import DriverDashBoardRightSide from "./DriverDashBoardRightSide";
 
 // Bootstrap Components
@@ -27,6 +26,7 @@ class DriverDashBoardIndex extends React.Component {
     this.setState({
       orderData: data
     });
+    console.log(this.state.orderData);
   };
 
   componentDidMount() {
@@ -38,9 +38,8 @@ class DriverDashBoardIndex extends React.Component {
   }
 
   render() {
-    
     // console.log(this.state.driverData);
-    console.log(this.state.orderData);
+    // console.log(this.state.orderData);
     return (
       <DriverDashBoardContext.Provider
         value={{

@@ -152,4 +152,10 @@ router.put("/bookcab", function(req, res) {
   });
 });
 
+// get user details
+router.post("/getUserDetails", function(req, res) {
+  User.find({ _id: req.body.userid }).then(response => {
+    res.send(response);
+  });
+});
 module.exports = router;
