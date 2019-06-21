@@ -173,7 +173,12 @@ class DriverDashBoardPickUpsToDoSideBar extends React.Component {
               </Col>
             </Row>
           </div>
-          <DriverDashBoardLandMarkModal isOpen={this.state.isModalOpen} />
+          <DriverDashBoardLandMarkModal
+            isOpen={this.state.isModalOpen}
+            handleClose={() => {
+              this.setState({ isModalOpen: false });
+            }}
+          />
         </div>
       );
     } else {

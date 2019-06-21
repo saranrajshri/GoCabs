@@ -15,11 +15,11 @@ class DriverDashBoardRightSide extends React.Component {
     return (
       <div>
         <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-          <Tab eventKey="home" title="Get a ride">
-            <DriverDashBoardGetARide />
-          </Tab>
-          <Tab eventKey="profile" title="Pickups to do">
+          <Tab eventKey="home" title="Pickups To Do">
             <DriverDashBoardPickupsToDo />
+          </Tab>
+          <Tab eventKey="profile" title="Go Online">
+            <DriverDashBoardGetARide />
           </Tab>
           <Tab eventKey="contact" title="Others">
             mbcd

@@ -38,7 +38,9 @@ class UserSearchDriversModal extends React.Component {
             <Modal.Header closeButton>
               <Modal.Title>Searching For Drivers</Modal.Title>
             </Modal.Header>
-            <Modal.Body />
+            <Modal.Body className="p-2">
+              Sending Request To Near By Drivers
+            </Modal.Body>
             <Modal.Footer>
               <Button
                 variant="secondary"
