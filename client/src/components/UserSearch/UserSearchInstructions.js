@@ -16,6 +16,7 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 // Components
 import UserSearchLoginModal from "./UserSearchLoginModal";
 import UserSearchDriversModal from "./UserSearchDriversModal";
+import DifferentWaysOfTransportModal from "./DifferentWaysOfTransportModal";
 
 class UserSearchInstructions extends React.Component {
   constructor() {
@@ -24,11 +25,18 @@ class UserSearchInstructions extends React.Component {
       isInstructionsOpen: false,
       loginAndRegiterModalIsOpen: false,
       showDriversModalIsOpen: false,
+      DifferentWaysOfTransportModalIsOpen: false,
       userLat: "",
       userLon: ""
     };
   }
 
+  // transport modal
+  showModal = () => {
+    this.setState({
+      DifferentWaysOfTransportModalIsOpen: true
+    });
+  };
   // Toggle instructions
   toggleInstructions = () => {
     this.setState({
@@ -116,9 +124,9 @@ class UserSearchInstructions extends React.Component {
           <Button
             variant="warning text-dark"
             size="sm"
-            onClick={this.searchForDrivers}
+            onClick={this.showModal}
           >
-            Search Drivers
+            Book
           </Button>
         </div>
 
@@ -182,6 +190,13 @@ class UserSearchInstructions extends React.Component {
           isOpen={this.state.showDriversModalIsOpen}
           handleClose={() => {
             this.setState({ showDriversModalIsOpen: false });
+          }}
+        />
+        <DifferentWaysOfTransportModal
+          isOpen={this.state.DifferentWaysOfTransportModalIsOpen}
+          showDriversModal={this.showDriversModal}
+          handleClose={() => {
+            this.setState({ DifferentWaysOfTransportModalIsOpen: false });
           }}
         />
       </div>
