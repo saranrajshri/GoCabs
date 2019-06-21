@@ -11,7 +11,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import UserSearchIndex from "./components/UserSearch/UserSearchIndex";
 import DriverLoginIndex from "./components/DriverPage/DriverLogin/DriverLoginIndex";
 import DriverDashBoardIndex from "./components/DriverPage/DriverDashBoard/DriverDashBoardIndex";
-// import DashBoardIndex from "./components/DashBoard/DashBoardIndex";
+import UserOrderIndex from "./components/UserOrder/UserOrderIndex";
 
 //React Router(dont change the order of this react router)
 const Route = require("react-router-dom").Route;
@@ -27,6 +27,7 @@ function App() {
           exact
           component={DriverDashBoardIndex}
         />
+        <Route path="/user/order" exact component={UserOrderIndex} />
       </Router>
     </div>
   );

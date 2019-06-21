@@ -110,4 +110,11 @@ router.post("/findNearByDrivers", function(req, res) {
     res.send(response);
   });
 });
+
+router.post("/getDriverDetails", function(req, res) {
+  Driver.find({ _id: req.body.driverid }).then(response => {
+    res.send(response);
+  });
+});
+
 module.exports = router;

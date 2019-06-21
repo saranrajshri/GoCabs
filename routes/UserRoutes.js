@@ -91,6 +91,7 @@ router.put("/updateUserSchema", function(req, res) {
     { _id: req.body.id },
     {
       searchingForCabs: true,
+      orderAccepted: "no",
       originData: [req.body.originLat, req.body.originLon],
       destinationData: [req.body.destinationLat, req.body.destinationLon],
       location: { coordinates: [req.body.userLat, req.body.userLon] },
@@ -158,4 +159,5 @@ router.post("/getUserDetails", function(req, res) {
     res.send(response);
   });
 });
+
 module.exports = router;

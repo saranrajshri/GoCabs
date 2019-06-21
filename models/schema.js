@@ -37,6 +37,9 @@ const UserSchema = new Schema({
   },
   driverID: {
     type: String
+  },
+  phoneNumber: {
+    type: Number
   }
 });
 const User = mongoose.model("user", UserSchema);

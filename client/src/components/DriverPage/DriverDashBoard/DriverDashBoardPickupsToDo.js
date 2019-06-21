@@ -16,9 +16,25 @@ class DriverDashBoardPickupsTodo extends React.Component {
   constructor() {
     super();
     this.state = {
-      fullOrderData: []
+      fullOrderData: [],
+      userDetails: [],
+      showRouteToCustomer: true
     };
   }
+  getUserData = () => {
+    if (this.state.fullOrderData !== undefined) {
+      axios
+        .post("http://localhost:8000/api/user/getUserDetails", {
+          userid: this.state.fullOrderData.userid
+        })
+        .then(response => {
+          this.setState({
+            userDetails: response.data[0]
+          });
+        });
+    }
+  };
+
   listenForOrders = () => {
     axios
       .post("http://localhost:8000/api/order/checkForOrders", {
@@ -33,19 +49,41 @@ class DriverDashBoardPickupsTodo extends React.Component {
   componentDidMount() {
     this.interval = setInterval(() => {
       this.listenForOrders();
+      this.getUserData();
     }, 1000);
   }
+
+  setShowRouteToCustomer = () => {
+    this.setState({
+      showRouteToCustomer: true
+    });
+  };
+
+  setShowRouteToDestination = () => {
+    this.setState({
+      showRouteToCustomer: false
+    });
+  };
   render() {
+    // console.log(this.state.fullOrderData);
+    // console.log(this.state.userDetails);
     return (
       <div className="mt-2">
         <Row>
           <Col md={4}>
             <DriverDashBoardPickupsToDoSideBar
               orderData={this.state.fullOrderData}
+              setShowRouteToCustomer={this.setShowRouteToCustomer}
+              setShowRouteToDestination={this.setShowRouteToDestination}
             />
           </Col>
           <Col md={8}>
-            <DriverDashBoardMap orderData={this.state.fullOrderData} />
+            <DriverDashBoardMap
+              showRouteToCustomer={this.state.showRouteToCustomer}
+              orderData={this.state.fullOrderData}
+              userDetails={this.state.userDetails}
+              driverDetails={this.context.driverData}
+            />
           </Col>
         </Row>
       </div>

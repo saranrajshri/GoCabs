@@ -216,6 +216,7 @@
   		var originIcon = getQueryVariable("originIcon")
   		originLat = originLat.replace("%20", " ");
   		originLon = originLon.replace("%20", " ");
+		  
       /**
        * Calculates and displays a car route from the Brandenburg Gate in the centre of Berlin
        * to Friedrichstraße Railway Station.
@@ -225,6 +226,8 @@
        *
        * @param   {H.service.Platform} platform    A stub class to access HERE services
        */
+
+
        function calculateRouteFromAtoB(platform) {
        	var router = platform.getRoutingService(),
        	routeRequestParams = {
@@ -370,7 +373,7 @@
 
         // Add a marker for each maneuver
         for (i = 0; i < route.leg.length; i += 1) {
-        	for (j = 1; j < route.leg[i].maneuver.length; j += 1) {
+        	for (j = 0; j < route.leg[i].maneuver.length; j += 1) {
             // Get the next maneuver.
             maneuver = route.leg[i].maneuver[j];
             // Add a marker to the maneuvers group
@@ -493,6 +496,9 @@ Number.prototype.toMMSS = function() {
     var destinationMarker = new H.map.Marker({ lat: destinationLat, lng: destinationLon }, { icon: destinationIcon });	
 	map.addObject(originMarker)
 	map.addObject(destinationMarker)
+
+	/* show you are here marker */
+
   </script>
 </body>
 </html>

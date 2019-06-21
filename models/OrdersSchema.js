@@ -25,8 +25,12 @@ const OrderSchema = new Schema({
   destinationTitle: {
     type: String
   },
+
   isRideFinished: {
     type: Boolean
+  },
+  landMarkPicture: {
+    type: String
   }
 });
 const order = mongoose.model("orders", OrderSchema);

@@ -9,8 +9,6 @@ import { Tabs, Tab } from "react-bootstrap";
 // Components
 import DriverDashBoardPickupsToDo from "./DriverDashBoardPickupsToDo";
 import DriverDashBoardGetARide from "./DriverDashBoardGetARide";
-// axios
-import axios from "axios";
 
 class DriverDashBoardRightSide extends React.Component {
   render() {
