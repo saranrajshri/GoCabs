@@ -33,6 +33,7 @@ class UserSearchInstructions extends React.Component {
 
   // transport modal
   showModal = () => {
+    this.updateDetailsToDB();
     this.setState({
       DifferentWaysOfTransportModalIsOpen: true
     });
@@ -46,6 +47,9 @@ class UserSearchInstructions extends React.Component {
 
   // Search For Drivers
   searchForDrivers = () => {
+    this.setState({
+      showDriversModalIsOpen: false
+    });
     if (this.context.userData.id === undefined) {
       // Open Modal
       this.updateDetailsToDB();
@@ -88,6 +92,7 @@ class UserSearchInstructions extends React.Component {
 
   // update all details to db
   updateDetailsToDB = () => {
+    console.log("called");
     axios.put("http://localhost:8000/api/user/updateUserSchema", {
       id: this.context.userData.id,
       originLat: this.context.originData.originLat,
@@ -195,6 +200,7 @@ class UserSearchInstructions extends React.Component {
         <DifferentWaysOfTransportModal
           isOpen={this.state.DifferentWaysOfTransportModalIsOpen}
           showDriversModal={this.showDriversModal}
+          searchForDrivers={this.searchForDrivers}
           handleClose={() => {
             this.setState({ DifferentWaysOfTransportModalIsOpen: false });
           }}

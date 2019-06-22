@@ -20,7 +20,7 @@ class DifferentWaysOfTransportModal extends React.Component {
               variant="warning"
               onClick={() => {
                 this.props.handleClose();
-                this.props.showDriversModal();
+                this.props.searchForDrivers();
               }}
             >
               No,I'm okay with cabs
