@@ -52,7 +52,8 @@ class UserSearchIndex extends React.Component {
 
   updatePlacesSuggestions = data => {
     this.setState({
-      placesSuggestions: data
+      placesSuggestions: data,
+      showDirectionsIsOpen: true
     });
   };
 

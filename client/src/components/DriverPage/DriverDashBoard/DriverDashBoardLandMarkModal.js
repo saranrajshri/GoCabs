@@ -17,7 +17,10 @@ class DriverDashBoardLandMarkModal extends React.Component {
               <Modal.Title>Showing Customer LandMark Pic</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Image src="../../uploads/x.jpg" className="w-100" />
+              <Image
+                src="../../uploads/myImage-landmark.jpg"
+                className="w-100"
+              />
             </Modal.Body>
             <Modal.Footer>
               <Button

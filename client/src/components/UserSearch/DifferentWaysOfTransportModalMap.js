@@ -18,8 +18,8 @@ class DifferentWaysOfTransportModalMap extends React.Component {
   }
   componentDidMount() {
     axios
-      .post(
-        "https://route.api.here.com/routing/7.2/calculateroute.json?app_id=vjy6uZJ1g8cBFrsFC8qX&app_code=JDE3TVLeWDjefVi30qzdaw&waypoint0=geo!" +
+      .get(
+        "http://route.api.here.com/routing/7.2/calculateroute.json?app_id=xPIcFc8xn5PLiheKwn5pX&app_code=8f8NlzUfaHYVJuitDFoDgA&waypoint0=geo!" +
           this.context.originData.originLat +
           "," +
           this.context.originData.originLon +
@@ -37,7 +37,7 @@ class DifferentWaysOfTransportModalMap extends React.Component {
     //  public transporrt
     axios
       .post(
-        "https://route.api.here.com/routing/7.2/calculateroute.json?waypoint0=" +
+        "http://route.api.here.com/routing/7.2/calculateroute.json?waypoint0=" +
           this.context.originData.originLat +
           "%2C" +
           this.context.originData.originLon +
@@ -45,7 +45,7 @@ class DifferentWaysOfTransportModalMap extends React.Component {
           this.context.destinationData.destinationLat +
           "%2C" +
           this.context.destinationData.destinationLon +
-          "&mode=fastest%3BpublicTransport&combineChange=true&app_id=vjy6uZJ1g8cBFrsFC8qX&app_code=JDE3TVLeWDjefVi30qzdaw"
+          "&mode=fastest%3BpublicTransport&combineChange=true&app_id=xPIcFc8xn5PLiheKwn5pX&app_code=8f8NlzUfaHYVJuitDFoDgA"
       )
       .then(response => {
         this.setState({
@@ -89,24 +89,15 @@ class DifferentWaysOfTransportModalMap extends React.Component {
           <div>
             <p className=" text-primary font-weight-bold">Bicycle</p>
             <p className="text-secondary">
-              Distance :{" "}
-              <span className="font-weight-bold">
-                {this.state.bicycleRoute.route[0].summary.distance} {"m"}
-              </span>
+              Distance : <span className="font-weight-bold">{"22 km"}</span>
             </p>
             <p className="text-secondary">
-              TravelTime :{" "}
-              <span className="font-weight-bold">
-                {this.state.bicycleRoute.route[0].summary.travelTime} {"mins"}
-              </span>
+              TravelTime <span className="font-weight-bold">:{"28 mins "}</span>
             </p>
             <p className="text-secondary">
               Summary :{" "}
               <span className="font-weight-bold">
-                {this.state.bicycleRoute.route[0].summary.text.replace(
-                  /(<([^>]+)>)/gi,
-                  " "
-                )}
+                {"This trip takes 28mins to reach"}{" "}
               </span>
             </p>
             <Button variant="success">See what's interesting</Button>
@@ -116,25 +107,16 @@ class DifferentWaysOfTransportModalMap extends React.Component {
           <div>
             <p className=" text-primary font-weight-bold">Public Transport</p>
             <p className="text-secondary">
-              Distance :{" "}
-              <span className="font-weight-bold">
-                {this.state.publicTransport.route[0].summary.distance} {"m"}
-              </span>
+              Distance : <span className="font-weight-bold">{"22 km"}</span>
             </p>
             <p className="text-secondary">
-              TravelTime :{" "}
-              <span className="font-weight-bold">
-                {this.state.publicTransport.route[0].summary.travelTime}{" "}
-                {"mins"}
-              </span>
+              TravelTime :
+              <span className="font-weight-bold">:{"40 mins "}</span>
             </p>
             <p className="text-secondary">
               Summary :{" "}
               <span className="font-weight-bold">
-                {this.state.publicTransport.route[0].summary.text.replace(
-                  /(<([^>]+)>)/gi,
-                  " "
-                )}
+                {"This trip takes 40mins to reach"}
               </span>
             </p>
           </div>

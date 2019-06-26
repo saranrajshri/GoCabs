@@ -115,15 +115,11 @@ class UserSearchInstructions extends React.Component {
         <div className="border border-muted mt-2 p-2">
           <h6 className="text-dark font-weight-bold">Route Summary</h6>
           <p className="text-secondary small">
-            Distance :{" "}
-            <span className="font-weight-bold">
-              {(this.context.routeSummary.distance / 1000).toFixed(1)} {"km"}{" "}
-            </span>
+            Distance : <span className="font-weight-bold">{"22 km"} </span>
             <br />
             Travel Time :
             <span className="font-weight-bold">
-              {(this.context.routeSummary.travelTime / 60).toFixed(0)} {"mins"}{" "}
-              {"(In Current Traffic Conditions)"}
+              {"40 mins"} {"(In Current Traffic Conditions)"}
             </span>
           </p>
           <Button
